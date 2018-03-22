@@ -9,6 +9,15 @@ Created on Mon Mar 19 16:25:58 2018
 """
 Day='8/13/2016 '
 
+from scipy.interpolate import interp1d
+import numpy as np
+from scipy import linalg
+import matplotlib.pyplot as plt
+from scipy.optimize import curve_fit
+from scipy.interpolate import interp1d
+from scipy.signal import savgol_filter
+from scipy.interpolate import UnivariateSpline
+
 from Pithon_loadfloat import * 
 import matplotlib.pyplot as plt
 connect_to_Server("net1552.net.ucf.edu")  
@@ -105,7 +114,7 @@ Current_Correct_base=Current_base+delta_Isc
  
 
            
-isc_corrected1_base=Isc0/irradiance*10-isc_corrected
+isc_corrected1_base=Isc0/irradiance*10-isc_corrected_base
 isc1=isc_corrected1_base=Isc0/irradiance*10-isc
 
 #newList = list(dataObject)
@@ -124,9 +133,9 @@ plt.plot(V_base,I_base)
 
 plt.plot(voc_corrected_base,isc_corrected1_base,'.')
 
-np.savetxt('IV_8_13_2016.txt',np.transpose([V,I]))
+np.savetxt('IV_8_13_2016.txt',np.transpose([V_base,I_base]))
 
-np.savetxt('sunsvoc_8_13_2016.txt',np.transpose([voc_corrected,isc_corrected1]))
+np.savetxt('sunsvoc_8_13_2016.txt',np.transpose([voc_corrected_base,isc_corrected1_base]))
 
 x=voc_corrected_base #voltage
 y=isc_corrected1_base #current
