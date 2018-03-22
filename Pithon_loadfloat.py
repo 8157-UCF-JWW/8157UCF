@@ -2,39 +2,29 @@
 """
 Created on Tue Jan 24 23:15:14 2017
 
-@author: Revised version from Hubert Seigneur
+@author: Siyu Guo
 """
 
 # This module imports libraries and such so python can call into the PI system
-import numpy as np
-
 import sys
 sys.path.append('C:\\Program Files (x86)\\PIPC\\AF\\PublicAssemblies\\4.0\\')
-
-import clr #requires pythonnet
+import clr
 clr.AddReference('OSIsoft.AFSDK')
-clr.AddReference('System.Collections')
-from System import Object
-from System.Collections import *
-from System.Net import *
+import numpy as np
 
-# This imports the different AF classes
+# This imports the difference classes
 from OSIsoft.AF.PI import *  
 from OSIsoft.AF.Search import *  
 from OSIsoft.AF.Asset import *  
 from OSIsoft.AF.Data import *  
-from OSIsoft.AF.Time import * 
-
+from OSIsoft.AF.Time import *  
 
 # create the import function for server connection
 def connect_to_Server(serverName):  
-    global piServers, piServer
     piServers = PIServers()  
-    piServer = piServers[serverName]
-#    piServer.Connect(False)
-    credential1 = NetworkCredential("Username", "Password");
-    piServer.Connect(credential1);
-    return piServer.ConnectionInfo.IsConnected
+    global piServer  
+    piServer = piServers[serverName]  
+    piServer.Connect(False)  
 
 # create the import function for tag call
 def get_tag_snapshot(tagname):  
@@ -60,17 +50,10 @@ def get_tag_values(tagname,timestart,timeend):
     data = tag.RecordedValues(timeRange,boundary,'',False,0)
     dataList = list(data)
     #print len(dataList)
-#    results = np.zeros((len(dataList), 3), dtype='object') #numpy array
-#    for i, sample in enumerate(data):
-#        results[i, 0] = i
-#        results[i, 1] = float(sample.Value)
-#        results[i, 2] = str(sample.Timestamp)
     results = np.zeros((len(dataList), 2), dtype='object') #numpy array
     for i, sample in enumerate(data):
-        results[i, 0] = float(sample.Value)
-        results[i, 1] = str(sample.Timestamp)
+        results[i, :] = float(sample.Value)
     return results
-
 
 def Update_Tag_Value(tagname, value, timestamp):
     tag_Value = clr.System.Object
@@ -82,11 +65,3 @@ def Update_Tag_Value(tagname, value, timestamp):
     tag_BufferOption = AFBufferOption.DoNotBuffer #options: (DoNotBuffer,BufferIfPossible,Buffer)
     tag.UpdateValue(tag_AFValue, tag_UpdateOption, tag_BufferOption)
     
-# Disconnect server
-def disconnect_Server(serverName):  
-#    piServers = PIServers()  
-    if (piServer == piServers[serverName]):
-        piServer.Disconnect()
-        return piServer.ConnectionInfo.IsConnected
-    else:
-        return 'Unknown'
