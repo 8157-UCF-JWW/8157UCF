@@ -1,7 +1,7 @@
 # 8157UCF
 Repository for Python code for group 8157 UCF
 
-	Bried description of repo structure
+	Brief description of repo structure
 
   		~ Documents folder - holds 'Word' or text documents describing project topics or details of code
   
