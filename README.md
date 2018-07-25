@@ -5,5 +5,3 @@ Bried description of repo structure
   P_Functions -holds Python code containing functions that other python code calls
   P_Params - holds Python code that performs 'deterministic' funcitons (Rs, J0, Isc-Voc curves, etc).
   P_Mlearn - holds Pythonn code that perform 'machine learning' functions
-  
-. 
