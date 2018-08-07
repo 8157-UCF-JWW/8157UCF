@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # -*- coding: utf-8 -*-
 """
 Created on Tue Jan 24 23:15:14 2017
@@ -211,3 +212,5 @@ def Update_Tag_Value2(tagname, value, timestamp):
     tag_BufferOption = AFBufferOption.DoNotBuffer #options: (DoNotBuffer,BufferIfPossible,Buffer)
     tag.UpdateValue(tag_AFValue, tag_UpdateOption, tag_BufferOption)
     
+   
+>>>>>>> 7fc0d4187a7c653737250fed918b55954354c97c
